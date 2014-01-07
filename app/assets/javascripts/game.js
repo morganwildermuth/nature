@@ -46,7 +46,7 @@ function season(){
 
 function tree(){
   this.age = 0
-  this.fruit = [];
+  this.fruit = 0;
   this.alive = true;
 
   this.update_tree = function(game){
@@ -57,10 +57,10 @@ function tree(){
       this.alive = false;
     }
     if (this.age > 3 && this.alive && game.season.stage == 1){
-      this.fruit = this.fruit.push('fruit');
+      this.fruit = Math.floor(Math.random()*11);
     }
     if (game.season.stage == 2){
-      this.fruit = [];
+      this.fruit = 0;
     }
     this.updateTreeDOM(game);
   };
@@ -70,7 +70,7 @@ function tree(){
       $("#tree ul").append('<li style-"color: red">DEAD</li>');
       clearInterval(game.interval);
     }
-    $('#fruit_amount').html(this.fruit.length);
+    $('#fruit_amount').html(this.fruit);
     $('#age').html(this.age);
   };
 }
