@@ -1,0 +1,17 @@
+nav {
+  height: 3em;
+  background: orange;
+  color: white;
+}
+
+nav li{
+  list-style: none;
+}
+
+#logo {
+  background-image: url("thicktree.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 3em;
+  width: 3.3em;
+  }
