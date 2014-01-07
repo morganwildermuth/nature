@@ -50,14 +50,16 @@ function tree(){
   this.alive = true;
 
   this.update_tree = function(game){
-    this.age += 1;
+    if (game.season.stage == 1){
+      this.age += 1
+    }
     if (this.age >= 10){
       this.alive = false;
     }
     if (this.age > 3 && this.alive && game.season.stage == 1){
-      this.fruit.push('fruit');
+      this.fruit = this.fruit.push('fruit');
     }
-    if (game.season.stage == 1){
+    if (game.season.stage == 2){
       this.fruit = [];
     }
     this.updateTreeDOM(game);
