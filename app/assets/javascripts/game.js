@@ -18,7 +18,6 @@ function game() {
       that.tree.update_tree(that);
     }, 1000);
     this.interval = intervalHandle;
-    this.interval();
   }
 }
 
