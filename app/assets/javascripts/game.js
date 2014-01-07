@@ -6,12 +6,17 @@ function game() {
 
   this.start = function(){
     that = this;
-    this.season.next_season();
-    setTimeout(function(){
+    that.tree.updateTreeDOM();
+    that.season.next_season();
+    that.next_time_tick();
+  };
+
+  this.next_time_tick = function(){
+    setInterval(function(){
       that.season.next_season();
       that.tree.update_tree(that.season);
-    }, 2000);
-  };
+    }, 1000);
+  }
 }
 
 function season(){
@@ -45,15 +50,24 @@ function tree(){
   this.update_tree = function(season){
     this.age += 1;
     if (this.age >= 10){
-      tree.alive = false;
+      this.alive = false;
     }
-    if (this.age > 3 && tree.alive && season.stage == 1){
-      this.fruit << 'fruit';
+    if (this.age > 3 && this.alive && season.stage == 1){
+      this.fruit.push('fruit');
     }
     if (season.stage == 1){
       this.fruit = [];
     }
-  }
+    this.updateTreeDOM();
+  };
+
+  this.updateTreeDOM = function(){
+    if(this.alive != true){
+      $("#tree ul").append('<li style-"color: red">DEAD</li>');
+    }
+    $('#fruit_amount').html(this.fruit.length);
+    $('#age').html(this.age);
+  };
 }
 
 
