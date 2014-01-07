@@ -3,19 +3,22 @@ function game() {
   this.year = 0;
   this.season = new season();
   this.tree = new tree();
+  this.interval = null;
 
   this.start = function(){
     that = this;
-    that.tree.updateTreeDOM();
+    that.tree.updateTreeDOM(that);
     that.season.next_season();
     that.next_time_tick();
   };
 
   this.next_time_tick = function(){
-    setInterval(function(){
+    var intervalHandle = setInterval(function(){
       that.season.next_season();
-      that.tree.update_tree(that.season);
+      that.tree.update_tree(that);
     }, 1000);
+    this.interval = intervalHandle;
+    this.interval();
   }
 }
 
@@ -47,23 +50,24 @@ function tree(){
   this.fruit = [];
   this.alive = true;
 
-  this.update_tree = function(season){
+  this.update_tree = function(game){
     this.age += 1;
     if (this.age >= 10){
       this.alive = false;
     }
-    if (this.age > 3 && this.alive && season.stage == 1){
+    if (this.age > 3 && this.alive && game.season.stage == 1){
       this.fruit.push('fruit');
     }
-    if (season.stage == 1){
+    if (game.season.stage == 1){
       this.fruit = [];
     }
-    this.updateTreeDOM();
+    this.updateTreeDOM(game);
   };
 
-  this.updateTreeDOM = function(){
+  this.updateTreeDOM = function(game){
     if(this.alive != true){
       $("#tree ul").append('<li style-"color: red">DEAD</li>');
+      clearInterval(game.interval);
     }
     $('#fruit_amount').html(this.fruit.length);
     $('#age').html(this.age);
