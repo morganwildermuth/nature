@@ -5,10 +5,12 @@ function game() {
   this.tree = new tree();
 
   this.start = function(){
-    this.season.next_season();
-    this.tree.update_tree(this.season);
     that = this;
-    setTimeout(function(){that.season.next_season()}, 2000);
+    this.season.next_season();
+    setTimeout(function(){
+      that.season.next_season();
+      that.tree.update_tree(that.season);
+    }, 2000);
   };
 }
 
@@ -16,7 +18,6 @@ function season(){
   this.stage = 1;
 
   this.next_season = function(){
-      that = this;
       if (this.stage != 4){
         this.stage += 1
       } else{
