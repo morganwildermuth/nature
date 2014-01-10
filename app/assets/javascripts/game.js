@@ -52,19 +52,31 @@ function tree(season){
   this.season = season;
 
   this.update_tree = function(game){
+    this.age_tree(game);
+    this.check_if_tree_died();
+    this.handle_fruit(game);
+    this.updateTreeDOM(game);
+  };
+
+  this.age_tree = function(game){
     if (game.season.name == "Spring"){
       this.age += 1
     }
+  };
+
+  this.check_if_tree_died = function(){
     if (this.age >= 10){
       this.alive = false;
     }
+  };
+
+  this.handle_fruit = function(game){
     if (this.age > 3 && this.alive && game.season.name == "Spring"){
       this.fruit = Math.floor(Math.random()*11);
     }
     if (game.season.name == "Summer"){
       this.fruit = 0;
     }
-    this.updateTreeDOM(game);
   };
 
   this.updateTreeDOM = function(game){
