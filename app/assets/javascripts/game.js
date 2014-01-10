@@ -1,4 +1,4 @@
-function game() {
+function game(){
 
   this.year = 0;
   this.season = new season();
