@@ -2,20 +2,21 @@ function game(){
 
   this.year = 0;
   this.season = new season();
-  this.tree = new tree();
+  this.tree = new tree("Summer");
   this.interval = null;
 
   this.start = function(){
-    that = this;
+    var that = this;
     that.tree.updateTreeDOM(that);
     that.season.next_season();
-    that.next_time_tick();
+    that.next_time_tick(that);
   };
 
-  this.next_time_tick = function(){
+  this.next_time_tick = function(game){
+    var game = game;
     var intervalHandle = setInterval(function(){
-      that.season.next_season();
-      that.tree.update_tree(that);
+      game.season.next_season();
+      game.tree.update_tree(game);
     }, 1000);
     this.interval = intervalHandle;
   }
@@ -45,11 +46,12 @@ function season(){
   };
 }
 
-function tree(season){
+function tree(fruit_season){
   this.age = 0;
   this.fruit = 0;
   this.alive = true;
-  this.season = season;
+  this.season = fruit_season;
+  this.seasons = ["Summer", "Fall", "Winter", "Spring"];
 
   this.update_tree = function(game){
     this.age_tree(game);
@@ -71,7 +73,7 @@ function tree(season){
   };
 
   this.handle_fruit = function(game){
-    if (this.age > 3 && this.alive && game.season.name == "Spring"){
+    if (this.age > 3 && this.alive && game.season.name == this.season){
       this.fruit = Math.floor(Math.random()*11);
     }
     if (game.season.name == "Summer"){
@@ -80,6 +82,7 @@ function tree(season){
   };
 
   this.updateTreeDOM = function(game){
+    var game = game
     if(this.alive != true){
       $("#tree ul").append('<li style-"color: red">DEAD</li>');
       clearInterval(game.interval);
