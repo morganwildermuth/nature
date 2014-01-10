@@ -52,6 +52,7 @@ function tree(fruit_season){
   this.alive = true;
   this.season = fruit_season;
   this.seasons = ["Summer", "Fall", "Winter", "Spring"];
+  this.dead_season = ($.inArray(this.season, this.seasons)) + 1
 
   this.update_tree = function(game){
     this.age_tree(game);
@@ -76,7 +77,7 @@ function tree(fruit_season){
     if (this.age > 3 && this.alive && game.season.name == this.season){
       this.fruit = Math.floor(Math.random()*11);
     }
-    if (game.season.name == "Summer"){
+    if (game.season.name == this.seasons[this.dead_season]){
       this.fruit = 0;
     }
   };
