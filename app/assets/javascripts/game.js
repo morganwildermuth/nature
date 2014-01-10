@@ -22,44 +22,46 @@ function game(){
 }
 
 function season(){
-  this.stage = 1;
+  this.name = "Spring";
 
   this.next_season = function(){
-      if (this.stage != 4){
-        this.stage += 1
-      } else{
-        this.stage = 1
-      };
+      switch(this.name){
+        case "Spring": this.name = "Summer"; break;
+        case "Summer": this.name = "Fall"; break;
+        case "Fall": this.name = "Winter"; break;
+        case "Winter": this.name = "Spring"; break;
+      }
       this.update_season();
   };
 
   this.update_season = function(){
-    switch (this.stage){
-      case 1: $("#season").html("Spring"); break;
-      case 2: $("#season").html("Summer"); break;
-      case 3: $("#season").html("Fall"); break;
-      case 4: $("#season").html("Winter"); break;
+    switch (this.name){
+      case "Spring": $("#season").html("Spring"); break;
+      case "Summer": $("#season").html("Summer"); break;
+      case "Fall": $("#season").html("Fall"); break;
+      case "Winter": $("#season").html("Winter"); break;
       default: $("#season").html("Error"); break;
     };
   };
 }
 
-function tree(){
-  this.age = 0
+function tree(season){
+  this.age = 0;
   this.fruit = 0;
   this.alive = true;
+  this.season = season;
 
   this.update_tree = function(game){
-    if (game.season.stage == 1){
+    if (game.season.name == "Spring"){
       this.age += 1
     }
     if (this.age >= 10){
       this.alive = false;
     }
-    if (this.age > 3 && this.alive && game.season.stage == 1){
+    if (this.age > 3 && this.alive && game.season.name == "Spring"){
       this.fruit = Math.floor(Math.random()*11);
     }
-    if (game.season.stage == 2){
+    if (game.season.name == "Summer"){
       this.fruit = 0;
     }
     this.updateTreeDOM(game);
